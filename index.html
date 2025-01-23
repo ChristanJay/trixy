@@ -5,20 +5,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Valentine's Day</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <audio controls>
-        <source src="ilove.mp3">
+    <audio id="valentineAudio">
+        <source src="ilove.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
     </audio>
     <div class="container">
         <div class="valentines">
             <div class="envelope">
                 <div class="card">
                     <div class="text">
-                        Happy <br> Valentines's <br> Day
+                        Happy <br> Valentine's <br> Day
                     </div>
                     <div class="heart"></div>
                 </div>
@@ -26,6 +27,36 @@
             <div class="front"></div>
         </div>
     </div>
+
+    <script>
+        const audio = document.getElementById('valentineAudio');
+        const envelope = document.querySelector('.envelope');
+        let isAudioUnlocked = false;
+    
+        // Unlock audio playback after user interaction
+        document.addEventListener('click', () => {
+            if (!isAudioUnlocked) {
+                audio.play().then(() => {
+                    audio.pause(); // Preload and unlock audio
+                    isAudioUnlocked = true;
+                    console.log('Audio unlocked!');
+                }).catch((error) => {
+                    console.error('Audio unlock failed:', error);
+                });
+            }
+        });
+    
+        // Play audio on envelope hover
+        envelope.addEventListener('mouseover', () => {
+            if (isAudioUnlocked) {
+                audio.currentTime = 0; // Reset audio to start
+                audio.play().catch((error) => {
+                    console.error('Audio playback failed:', error);
+                });
+            }
+        });
+    </script>
+    
 </body>
 
 </html>
